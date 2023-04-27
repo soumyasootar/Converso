@@ -4,13 +4,13 @@ const chatModel = mongoose.Schema(
   {
     chatName: { type: String, trim: true },
     isGroupChat: { type: Boolean, default: false },
-    users: [{ type: Mongoose.Schema.type.ObjectId, ref: "User" }],
-    latestMessage: { type: Mongoose.Schema.type.ObjectId, ref: "Message" },
-    groupAdmin: { type: Mongoose.Schema.type.ObjectId, ref: "User" },
+    users: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    latestMessage: { type: mongoose.Schema.Types.ObjectId, ref: "Message" },
+    groupAdmin: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   },
   { timestamps: true }
 );
 
-const Chat = Mongoose.model("Chat",chatModel);
+const Chat = mongoose.model("Chat", chatModel);
 
-module.exports=Chat
+module.exports = Chat;
