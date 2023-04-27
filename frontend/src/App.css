@@ -1,0 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Carlito&display=swap');
+
+.App{
+    background-color:red;
+    height:100vh;
+    display:flex;
+    background-image:url("./pexels-jakub-novacek-924824 (1).jpg");
+    /* background-image:url("./pexels-steve-johnson-1509534.jpg"); */
+    background-size:cover;
+    /* background-position:center */
+}
