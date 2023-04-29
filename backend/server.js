@@ -6,6 +6,7 @@ const app=express();
 const dotenv=require("dotenv");
 const connectDB = require("./configs/db");
 const userRoute = require("./routes/userRoute");
+const { notFound, errorHandler } = require("./middlewares/errorMiddleware");
 
 
 app.use(express.json())  //to accept JSOn data
@@ -19,6 +20,8 @@ app.get("/",(req,res)=>{
 })
 
 app.use("/api/user",userRoute)
+app.use(notFound)
+app.use(errorHandler)
 
 const PORT=process.env.PORT 
 

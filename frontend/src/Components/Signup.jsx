@@ -8,22 +8,30 @@ import {
   VStack,
   useToast,
 } from "@chakra-ui/react";
+import axios from "axios";
 import React, { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const [show, setshow] = useState(false);
   const ref = useRef(null);
   const toast = useToast();
+  const [pic, setPic] = useState();
+  const [picLoading, setPicLoading] = useState(false);
+  const navigate = useNavigate();
+  
 
-  const submitForm = (e) => {
+  const submitForm = async (e) => {
     e.preventDefault();
+    setPicLoading(true);
     const formData = new FormData(ref.current);
+
     if (formData.get("password") === formData.get("confirm-password")) {
       const obj = {
         name: formData.get("name"),
         email: formData.get("email"),
         password: formData.get("password"),
-        pic: formData.get("image"),
+        pic: pic,
       };
       console.log("obj: ", obj);
       toast({
@@ -32,16 +40,106 @@ const Signup = () => {
         status: "success",
         duration: 9000,
         isClosable: true,
+        position: "top",
       });
+      try {
+        const config = {
+          headers: {
+            "Content-type": "application/json",
+          },
+        };
+        const { data } = await axios.post("/api/user", obj, config);
+        console.log(data);
+        toast({
+          title: "Registration Successful",
+          description: "We've created your account for you",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+          position: "top",
+        });
+        localStorage.setItem("userInfo", JSON.stringify(data));
+        setPicLoading(false);
+        navigate("/chats");
+      } catch (error) {
+        toast({
+          title: "Error Occured ! While Registering",
+          description: error.response.data.message,
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom",
+        });
+        setPicLoading(false);
+      }
     } else {
       toast({
         title: `Password Doesnt Match`,
         status: "warning",
         isClosable: true,
         duration: 9000,
+        position: "top",
       });
     }
   };
+
+  const postDetails = async (pics) => {
+    setPicLoading(true);
+    if (pics === undefined) {
+      toast({
+        title: "Please Select an Image!",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom-left",
+      });
+      return;
+    }
+    console.log(pics);
+    if (
+      pics.type === "image/jpeg" ||
+      pics.type === "image/png" ||
+      pics.type === "image/jpg"
+    ) {
+      const data = new FormData();
+      data.append("file", pics);
+      data.append("upload_preset", "converso");
+      data.append("cloud_name", "dr7k3nwvd");
+      fetch("https://api.cloudinary.com/v1_1/dr7k3nwvd/image/upload", {
+        method: "post",
+        body: data,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setPic(data.url.toString());
+          console.log(data.url.toString());
+          setPicLoading(false);
+          toast({
+            title: "Picture Uploaded",
+            description: "Uploaded to Cloudinary DataBase",
+            status: "success",
+            duration: 3000,
+            isClosable: true,
+            position: "bottom",
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+          setPicLoading(false);
+        });
+    } else {
+      toast({
+        title: "Please Select an Image!",
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+      setPicLoading(false);
+      return;
+    }
+  };
+
   return (
     <VStack spacing={"5px"}>
       <form ref={ref} style={{ width: "100%" }} onSubmit={submitForm}>
@@ -81,11 +179,23 @@ const Signup = () => {
           />
         </FormControl>
 
-        <FormControl  mb={2}>
+        <FormControl mb={2}>
           <FormLabel>Profile Pic</FormLabel>
-          <Input type="file" name="image" p={1.5} accept="image/*" />
+          <Input
+            type="file"
+            name="image"
+            p={1.5}
+            accept="image/*"
+            onChange={(e) => postDetails(e.target.files[0])}
+          />
         </FormControl>
-        <Button type="submit" w={"full"} mt="2" colorScheme="blue">
+        <Button
+          type="submit"
+          w={"full"}
+          mt="2"
+          isLoading={picLoading}
+          colorScheme="blue"
+        >
           Sign Up
         </Button>
       </form>
