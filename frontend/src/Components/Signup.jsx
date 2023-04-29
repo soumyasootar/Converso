@@ -48,6 +48,9 @@ const Signup = () => {
             "Content-type": "application/json",
           },
         };
+        /* Sending a POST request to the "/api/user" endpoint with the data object and configuration
+        options provided, and then destructuring the response data from the returned Promise object.
+        The response data is then stored in the `data` variable. */
         const { data } = await axios.post("/api/user", obj, config);
         console.log(data);
         toast({

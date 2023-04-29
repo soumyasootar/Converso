@@ -8,34 +8,60 @@ import {
   VStack,
   useToast,
 } from "@chakra-ui/react";
+import axios from "axios";
 import React, { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 const Login = () => {
   const [show, setshow] = useState(false);
   const ref = useRef(null);
   const toast = useToast();
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
-  const submitForm = (e) => {
+  const submitForm = async (e) => {
     e.preventDefault();
     const formData = new FormData(ref.current);
     const obj = {
       email: formData.get("email"),
       password: formData.get("password"),
     };
-    console.log("obj: ", obj);
-    toast({
-      title: "Welcome Back",
-      description: "Long Time No See !!!",
-      status: "success",
-      duration: 9000,
-      isClosable: true,
-    });
 
-      // toast({
-      //   title: `Password Doesnt Match`,
-      //   status: "warning",
-      //   isClosable: true,
-      //   duration: 9000,
-      // });
+    console.log("obj: ", obj);
+
+    try {
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+        },
+      };
+
+      const { data } = await axios.post("/api/user/login", obj, config);
+
+      toast({
+        title: "Welcome Back",
+        description: "Long Time No See !!!",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
+      localStorage.setItem("userInfo", JSON.stringify(data));
+
+      setLoading(false);
+
+      navigate("/chats");
+    } catch (error) {
+      console.log("error: ", error);
+      toast({
+        title: "Error Occured while Logging In!",
+        description: error.response.data.message,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+      setLoading(false);
+    }
   };
   return (
     <VStack spacing={"5px"}>
@@ -64,7 +90,13 @@ const Login = () => {
           </InputGroup>
         </FormControl>
 
-        <Button type="submit" w={"full"} mt="2" colorScheme="blue">
+        <Button
+          type="submit"
+          w={"full"}
+          mt="2"
+          isLoading={loading}
+          colorScheme="blue"
+        >
           Sign Up
         </Button>
       </form>
