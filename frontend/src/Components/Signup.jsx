@@ -81,7 +81,7 @@ const Signup = () => {
           />
         </FormControl>
 
-        <FormControl isRequired mb={2}>
+        <FormControl  mb={2}>
           <FormLabel>Profile Pic</FormLabel>
           <Input type="file" name="image" p={1.5} accept="image/*" />
         </FormControl>
