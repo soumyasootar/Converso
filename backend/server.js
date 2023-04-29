@@ -8,8 +8,10 @@ const connectDB = require("./configs/db");
 dotenv.config()
 
 app.get("/",(req,res)=>{
-    res.send("hi");
+    res.send("Welcome to C O N V E R S O api");
 })
+
+// app.use("/api/user",)
 
 const PORT=process.env.PORT 
 
