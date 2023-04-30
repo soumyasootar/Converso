@@ -7,8 +7,8 @@ const { protect } = require("../middlewares/authMiddleware");
 const userRoute = express.Router()
 
 userRoute.post("/",registerUser)
-userRoute.get("/",allUsers)
-userRoute.post("/login",protect,authUser)
+userRoute.get("/",protect,allUsers)
+userRoute.post("/login",authUser)
 
 
 module.exports=userRoute;
