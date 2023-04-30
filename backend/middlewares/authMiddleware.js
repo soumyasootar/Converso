@@ -22,7 +22,12 @@ const protect = asyncHandler(async (req, res, next) => {
       const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
 
       req.user = await User.findById(decoded.id).select("-password");
-
+      /* `select("-password")` is a Mongoose method that is
+      used to exclude the `password` field from the user
+      object that is returned by the `User.findById()`
+      method. This is done for security reasons, as the
+      password should never be sent to the client in the
+      response. */
       next();
     } catch (error) {
       res.status(401);

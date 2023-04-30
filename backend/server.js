@@ -24,6 +24,8 @@ app.use(errorHandler);
 const PORT = process.env.PORT;
 
 app.listen(PORT, () => {
+  console.log();
+  console.log('🚀🚀🚀'.inverse); 
   console.log(`Server is Listening at http://localhost:${PORT}`.blue.bold);
   connectDB();
 });
