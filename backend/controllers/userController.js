@@ -77,4 +77,20 @@ module.exports.authUser = asyncHandler(async (req, res) => {
   }
 });
 
+/* This code is creating a `keyword` object that will be used to search for users in the database based
+on a search query. */
+module.exports.allUsers= asyncHandler(async(req,res)=>{
+  const keyword = req.query.search ? {
+    $or :[
+      {name:{$regex:req.query.search,$options:"i"}},
+      {email:{$regex:req.query.search,$options:"i"}}
+    ]
+  } :{}
+
+  /* `const user =await User.find(keyword).find({_id:{:req.user._id}})` is a code that searches for
+  users in the database based on a search query and excludes the currently logged-in user. */
+  const users =await User.find(keyword).find({_id:{$ne:req.user._id}})
+  res.send(users)
+})
+
 // module.exports = {registerUser , authUser};
