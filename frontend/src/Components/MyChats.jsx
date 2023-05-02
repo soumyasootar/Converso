@@ -9,16 +9,17 @@ import ChatLoading from "./ChatLoading";
 import { Button } from "@chakra-ui/react";
 import GroupChatModal from "./GroupChatModal";
 import { ChatState } from "../Context/ChatProvider";
+import { getSender } from "../configs/chatLogics";
 
 const MyChats = ({ fetchAgain }) => {
   const [loggedUser, setLoggedUser] = useState();
 
   const { selectedChat, setSelectedChat, user, chats, setChats } = ChatState();
+  console.log("chats: ", chats);
 
   const toast = useToast();
 
   const fetchChats = async () => {
-    // console.log(user._id);
     try {
       const config = {
         headers: {
@@ -27,6 +28,7 @@ const MyChats = ({ fetchAgain }) => {
       };
 
       const { data } = await axios.get("/api/chat", config);
+      console.log("data: ", data);
       setChats(data);
     } catch (error) {
       toast({
@@ -48,7 +50,7 @@ const MyChats = ({ fetchAgain }) => {
 
   return (
     <Box
-      d={{ base: selectedChat ? "none" : "flex", md: "flex" }}
+      display={{ base: selectedChat ? "none" : "flex", md: "flex" }}
       flexDir="column"
       alignItems="center"
       p={3}
@@ -62,15 +64,15 @@ const MyChats = ({ fetchAgain }) => {
         px={3}
         fontSize={{ base: "28px", md: "30px" }}
         fontFamily="Work sans"
-        d="flex"
+        display="flex"
         w="100%"
         justifyContent="space-between"
         alignItems="center"
       >
-        My Chats
+        C H A T S
         <GroupChatModal>
           <Button
-            d="flex"
+            display="flex"
             fontSize={{ base: "17px", md: "10px", lg: "17px" }}
             rightIcon={<AddIcon />}
           >
@@ -79,7 +81,7 @@ const MyChats = ({ fetchAgain }) => {
         </GroupChatModal>
       </Box>
       <Box
-        d="flex"
+        display="flex"
         flexDir="column"
         p={3}
         bg="#F8F8F8"
@@ -101,10 +103,14 @@ const MyChats = ({ fetchAgain }) => {
                 borderRadius="lg"
                 key={chat._id}
               >
+                {/* This code is rendering the name of the chat in the chat list. If the chat is a group chat, it
+       will display the name of the group chat, otherwise, it will display the name of the other
+       user in the chat. The `getSender` function is used to determine the name of the other user in
+       the chat. */}
                 <Text>
-                  {/* {!chat.isGroupChat
+                  {!chat.isGroupChat
                     ? getSender(loggedUser, chat.users)
-                    : chat.chatName} */}
+                    : chat.chatName}
                 </Text>
                 {chat.latestMessage && (
                   <Text fontSize="xs">

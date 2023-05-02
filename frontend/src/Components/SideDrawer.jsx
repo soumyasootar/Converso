@@ -22,7 +22,7 @@ import { BellIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { Avatar } from "@chakra-ui/avatar";
 import axios from "axios";
 import { useToast } from "@chakra-ui/toast";
-import { Spinner } from "@chakra-ui/react";
+import { Spinner } from "@chakra-ui/spinner";
 import NotificationBadge, { Effect } from "react-notification-badge";
 import { ChatState } from "../Context/ChatProvider";
 import ProfileModal from "./ProfileModal";
@@ -106,7 +106,14 @@ const SideDrawer = () => {
       };
       const { data } = await axios.post(`/api/chat`, { userId }, config);
 
-      if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
+      /* This code is checking if the `chats` array already contains a chat with the same `_id` as the newly
+      created chat `data`. If it does not exist, it adds the new chat `data` to the beginning of the
+      `chats` array using the `setChats` function. If it already exists, it does not add the new chat to
+      the array. */
+      if (!chats.find((c) => c._id === data._id)) {
+        setChats([data, ...chats]);
+      }
+
       setSelectedChat(data);
       setLoadingChat(false);
       onClose();
