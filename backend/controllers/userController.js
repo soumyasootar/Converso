@@ -59,6 +59,7 @@ module.exports.authUser = asyncHandler(async (req, res) => {
   }
 
   const userExists = await User.findOne({ email });
+  console.log("userExists: ", userExists);
 
   if (!userExists) {
     res.status(400);

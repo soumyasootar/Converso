@@ -26,7 +26,7 @@ const HomePage = () => {
   return (
     <Container maxW={"xl"} centerContent>
       <Box
-        d="flex"
+        display="flex"
         justifyContent={"center"}
         p="3"
         m="40px 0 20px 0"

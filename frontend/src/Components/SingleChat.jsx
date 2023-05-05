@@ -3,7 +3,6 @@ import { Input } from "@chakra-ui/input";
 import { Box, Text } from "@chakra-ui/layout";
 import "./styles.css";
 import { Button, IconButton, Spinner, useToast } from "@chakra-ui/react";
-// import { getSender, getSenderFull } from "../config/ChatLogics";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { ArrowBackIcon } from "@chakra-ui/icons";
@@ -164,6 +163,10 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
   return (
     <>
+       {/* This code is rendering the UI for a single chat window. It checks if there is a selected chat
+      (i.e. if the user has clicked on a chat to open it), and if so, it renders the chat window
+      with the chat header, messages, and input field for sending new messages. If there is no
+      selected chat, it renders a message prompting the user to click on a user to start chatting.  */}
       {selectedChat ? (
         <>
           <Text
@@ -172,18 +175,22 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             px={2}
             w="100%"
             fontFamily="Work sans"
-            d="flex"
+            display="flex"
             justifyContent={{ base: "space-between" }}
             alignItems="center"
           >
             <IconButton
-              d={{ base: "flex", md: "none" }}
-              icon={<ArrowBackIcon />}
+              display={{ base: "flex", md: "none" }}
+              icon={<ArrowBackIcon/>}
               onClick={() => setSelectedChat("")}
             />
+            {/* This code is conditionally rendering either the sender's name and a profile modal or the
+            group chat name and an update group chat modal, depending on whether the selected chat
+            is a group chat or not.  */}
             {messages &&
               (!selectedChat.isGroupChat ? (
                 <>
+                {/* not a group chat  */}
                   {getSender(user, selectedChat.users)}
                   <ProfileModal
                     user={getSenderFull(user, selectedChat.users)}
@@ -191,6 +198,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                 </>
               ) : (
                 <>
+                {/* is a group chat  */}
                   {selectedChat.chatName.toUpperCase()}
                   <UpdateGroupChatModal
                     fetchMessages={fetchMessages}
@@ -201,7 +209,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
               ))}
           </Text>
           <Box
-            d="flex"
+            display="flex"
             flexDir="column"
             justifyContent="flex-end"
             p={3}
@@ -255,7 +263,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         </>
       ) : (
         // to get socket.io on same page
-        <Box d="flex" alignItems="center" justifyContent="center" h="100%">
+        <Box display="flex" alignItems="center" justifyContent="center" h="100%">
           <Text fontSize="3xl" pb={3} fontFamily="Work sans">
             Click on a user to start chatting
           </Text>

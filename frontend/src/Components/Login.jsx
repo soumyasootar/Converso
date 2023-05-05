@@ -1,3 +1,4 @@
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import {
   Button,
   FormControl,
@@ -83,8 +84,9 @@ const Login = () => {
                 onClick={() => {
                   setshow(!show);
                 }}
+                backgroundColor={"transparent"}
               >
-                {show ? "Hide" : "Show"}
+                {!show ? <ViewIcon/> : <ViewOffIcon/>}
               </Button>
             </InputRightElement>
           </InputGroup>
