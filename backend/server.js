@@ -8,6 +8,7 @@ const connectDB = require("./configs/db");
 const userRoute = require("./routes/userRoute");
 const { notFound, errorHandler } = require("./middlewares/errorMiddleware");
 const chatRoute = require("./routes/chatRoute");
+const messageRoute = require("./routes/messageRoute");
 
 app.use(express.json()); //to accept JSOn data
 app.use(cors());
@@ -20,6 +21,10 @@ app.get("/", (req, res) => {
 
 app.use("/api/user", userRoute);
 app.use("/api/chat", chatRoute);
+app.use("/api/message", messageRoute);
+
+
+
 app.use(notFound);
 app.use(errorHandler);
 
