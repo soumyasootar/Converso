@@ -16,6 +16,7 @@ import {
   DrawerContent,
   DrawerHeader,
   DrawerOverlay,
+  Circle,
 } from "@chakra-ui/modal";
 import { Tooltip } from "@chakra-ui/tooltip";
 import { BellIcon, ChevronDownIcon } from "@chakra-ui/icons";
@@ -23,7 +24,8 @@ import { Avatar } from "@chakra-ui/avatar";
 import axios from "axios";
 import { useToast } from "@chakra-ui/toast";
 import { Spinner } from "@chakra-ui/spinner";
-import NotificationBadge, { Effect } from "react-notification-badge";
+// import NotificationBadge, { Effect } from "react-notification-badge";
+import { Badge } from "@chakra-ui/react";
 import { ChatState } from "../Context/ChatProvider";
 import ProfileModal from "./ProfileModal";
 import { useNavigate } from "react-router-dom";
@@ -155,11 +157,17 @@ const SideDrawer = () => {
         </Text>
         <div>
           <Menu>
-            <MenuButton p={1}>
-              <NotificationBadge
+            <MenuButton p={1} position={"relative"}>
+              {/* <NotificationBadge
                 count={notification.length}
                 effect={Effect.SCALE}
-              />
+              /> */}
+              {notification.length>0?
+              <Badge position={"absolute"} right={"0.5"} animation={"forwards"} color={"white"} bg="red.400" borderRadius="full" px={1} py={"-1"}>
+                {notification.length}
+              </Badge>:<></>
+              }
+              {/* <Box>{notification.length}</Box> */}
               <BellIcon fontSize="2xl" m={1} />
             </MenuButton>
             <MenuList pl={2}>
@@ -167,6 +175,7 @@ const SideDrawer = () => {
               {notification.map((notif) => (
                 <MenuItem
                   key={notif._id}
+                  //onclick go to that particular chat and remove notification
                   onClick={() => {
                     setSelectedChat(notif.chat);
                     setNotification(notification.filter((n) => n !== notif));

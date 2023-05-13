@@ -122,6 +122,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     // eslint-disable-next-line
   }, [selectedChat]);
 
+  console.log("notification: ", notification);
   useEffect(() => {
     socket.on("message recieved", (newMessageRecieved) => {
       if (
