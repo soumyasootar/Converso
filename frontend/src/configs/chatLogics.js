@@ -17,6 +17,16 @@ export const isSameSenderMargin = (messages, m, i, userId) => {
   else return "auto";
 };
 
+/**
+ * The function checks if the sender of a message is the same as the sender of the next message in an
+ * array, and if the sender is not the user's ID.
+ * @param messages - an array of message objects
+ * @param m - The current message object being compared to the next message object in the array.
+ * @param i - The index of the current message in the `messages` array.
+ * @param userId - The ID of the user who is currently logged in or using the messaging system.
+ * @returns The function `isSameSender` takes in four parameters: `messages`, `m`, `i`, and `userId`.
+ * It returns a boolean value that is `true` if the following conditions are met:
+ */
 export const isSameSender = (messages, m, i, userId) => {
   return (
     i < messages.length - 1 &&

@@ -121,6 +121,7 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
 
       user1._id === user._id ? setSelectedChat() : setSelectedChat(data);
       setFetchAgain(!fetchAgain);
+      //after removing someone from group just refresh chats
       fetchMessages();
       setLoading(false);
     } catch (error) {
