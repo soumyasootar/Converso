@@ -29,6 +29,7 @@ import ProfileModal from "./ProfileModal";
 import { useNavigate } from "react-router-dom";
 import ChatLoading from "./ChatLoading";
 import UserListItem from "./UserListItem";
+import { getSender } from "../configs/chatLogics";
 
 const SideDrawer = () => {
   const [search, setSearch] = useState("");
@@ -173,9 +174,7 @@ const SideDrawer = () => {
                 >
                   {notif.chat.isGroupChat
                     ? `New Message in ${notif.chat.chatName}`
-                    : {
-                        /* `New Message from ${getSender(user, notif.chat.users)}`} */
-                      }`New Message from `}
+                    : `New Message from ${getSender(user, notif.chat.users)}`}
                 </MenuItem>
               ))}
             </MenuList>

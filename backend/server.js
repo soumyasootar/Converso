@@ -43,7 +43,7 @@ const io = require("socket.io")(server, {
  60 seconds (60000 milliseconds). */
   pingTimeout: 60000,
   cors: {
-    origin: "http://localhost:6970",
+    origin: "http://localhost:3000",
     // credentials: true,
   },
 });
