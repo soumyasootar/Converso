@@ -2,7 +2,7 @@
   "name": "converso",
   "version": "1.0.0",
   "description": "Converso is a real-time chat application built using React, Socket.IO, MongoDB, Express, Node.js, and Chakra UI. The app enables users to chat with each other instantly, while offering an intuitive and modern UI. Converso is built to be scalable and reliable, and can be easily deployed to any environment. Try it out now!",
-  "main": "index.js",
+  "main": "backend/server.js",
   "scripts": {
     "start": "nodemon backend/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
