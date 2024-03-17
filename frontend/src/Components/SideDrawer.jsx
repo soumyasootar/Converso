@@ -16,7 +16,6 @@ import {
   DrawerContent,
   DrawerHeader,
   DrawerOverlay,
-  Circle,
 } from "@chakra-ui/modal";
 import { Tooltip } from "@chakra-ui/tooltip";
 import { BellIcon, ChevronDownIcon } from "@chakra-ui/icons";
