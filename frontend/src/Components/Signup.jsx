@@ -11,6 +11,7 @@ import {
 import axios from "axios";
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+const ENDPOINT = "https://converso-vf08.onrender.com"; // "https://talk-a-tive.herokuapp.com"; -> After deployment
 
 const Signup = () => {
   const [show, setshow] = useState(false);
@@ -33,7 +34,7 @@ const Signup = () => {
         password: formData.get("password"),
         pic: pic,
       };
-      console.log("obj: ", obj);
+      // console.log("obj: ", obj);
       toast({
         title: "Account created",
         description: "We've created your account for you.",
@@ -51,8 +52,8 @@ const Signup = () => {
         /* Sending a POST request to the "/api/user" endpoint with the data object and configuration
         options provided, and then destructuring the response data from the returned Promise object.
         The response data is then stored in the `data` variable. */
-        const { data } = await axios.post("/api/user", obj, config);
-        console.log(data);
+        const { data } = await axios.post(`${ENDPOINT}/api/user`, obj, config);
+        // console.log(data);
         toast({
           title: "Registration Successful",
           description: "We've created your account for you",
@@ -98,7 +99,7 @@ const Signup = () => {
       });
       return;
     }
-    console.log(pics);
+    // console.log(pics);
     if (
       pics.type === "image/jpeg" ||
       pics.type === "image/png" ||
@@ -115,7 +116,7 @@ const Signup = () => {
         .then((res) => res.json())
         .then((data) => {
           setPic(data.url.toString());
-          console.log(data.url.toString());
+          // console.log(data.url.toString());
           setPicLoading(false);
           toast({
             title: "Picture Uploaded",

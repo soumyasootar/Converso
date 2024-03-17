@@ -32,6 +32,7 @@ import { useNavigate } from "react-router-dom";
 import ChatLoading from "./ChatLoading";
 import UserListItem from "./UserListItem";
 import { getSender } from "../configs/chatLogics";
+const ENDPOINT = "https://converso-vf08.onrender.com"; // "https://talk-a-tive.herokuapp.com"; -> After deployment
 
 const SideDrawer = () => {
   const [search, setSearch] = useState("");
@@ -80,7 +81,7 @@ const SideDrawer = () => {
         },
       };
 
-      const { data } = await axios.get(`/api/user?search=${search}`, config);
+      const { data } = await axios.get(`${ENDPOINT}/api/user?search=${search}`, config);
 
       setLoading(false);
       setSearchResult(data);
@@ -97,7 +98,7 @@ const SideDrawer = () => {
   };
 
   const accessChat = async (userId) => {
-    console.log(userId);
+    // console.log(userId);
 
     try {
       setLoadingChat(true);
@@ -107,7 +108,7 @@ const SideDrawer = () => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.post(`/api/chat`, { userId }, config);
+      const { data } = await axios.post(`${ENDPOINT}/api/chat`, { userId }, config);
 
       /* This code is checking if the `chats` array already contains a chat with the same `_id` as the newly
       created chat `data`. If it does not exist, it adds the new chat `data` to the beginning of the

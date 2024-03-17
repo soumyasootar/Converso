@@ -10,12 +10,13 @@ import { Button } from "@chakra-ui/react";
 import GroupChatModal from "./GroupChatModal";
 import { ChatState } from "../Context/ChatProvider";
 import { getSender } from "../configs/chatLogics";
+const ENDPOINT = "https://converso-vf08.onrender.com"; // "https://talk-a-tive.herokuapp.com"; -> After deployment
 
 const MyChats = ({ fetchAgain }) => {
   const [loggedUser, setLoggedUser] = useState();
 
   const { selectedChat, setSelectedChat, user, chats, setChats } = ChatState();
-  console.log("chats: ", chats);
+  // console.log("chats: ", chats);
 
   const toast = useToast();
 
@@ -27,8 +28,8 @@ const MyChats = ({ fetchAgain }) => {
         },
       };
 
-      const { data } = await axios.get("/api/chat", config);
-      console.log("data: ", data);
+      const { data } = await axios.get(`${ENDPOINT}/api/chat`, config);
+      // console.log("data: ", data);
       setChats(data);
     } catch (error) {
       toast({

@@ -21,6 +21,7 @@ import { useState } from "react";
 import { ChatState } from "../Context/ChatProvider";
 import UserBadgeItem from "./UserBadgeItem";
 import UserListItem from "./UserListItem";
+const ENDPOINT = "https://converso-vf08.onrender.com"; // "https://talk-a-tive.herokuapp.com"; -> After deployment
 
 const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -66,7 +67,7 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
         },
       };
       const { data } = await axios.put(
-        `/api/chat/addgroup`,
+        `${ENDPOINT}/api/chat/addgroup`,
         {
           chatId: selectedChat._id,
           userId: user1._id,
@@ -111,7 +112,7 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
         },
       };
       const { data } = await axios.put(
-        `/api/chat/removegroup`,
+        `${ENDPOINT}/api/chat/removegroup`,
         {
           chatId: selectedChat._id,
           userId: user1._id,
@@ -151,8 +152,8 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.get(`/api/user?search=${search}`, config);
-      console.log(data);
+      const { data } = await axios.get(`${ENDPOINT}/api/user?search=${search}`, config);
+      // console.log(data);
       setLoading(false);
       setSearchResult(data);
     } catch (error) {
@@ -179,7 +180,7 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
         },
       };
       const { data } = await axios.put(
-        `/api/chat/rename`,
+        `${ENDPOINT}/api/chat/rename`,
         {
           chatId: selectedChat._id,
           chatName: groupChatName,
@@ -187,7 +188,7 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
         config
       );
 
-      console.log(data._id);
+      // console.log(data._id);
       // setSelectedChat("");
       setSelectedChat(data);
       setFetchAgain(!fetchAgain);

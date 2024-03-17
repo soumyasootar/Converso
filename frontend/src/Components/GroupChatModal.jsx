@@ -19,6 +19,8 @@ import { useState } from "react";
 import { ChatState } from "../Context/ChatProvider";
 import UserListItem from "./UserListItem";
 import UserBadgeItem from "./UserBadgeItem";
+const ENDPOINT = "https://converso-vf08.onrender.com"; // "https://talk-a-tive.herokuapp.com"; -> After deployment
+
 
 const GroupChatModal = ({ children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -33,7 +35,7 @@ const GroupChatModal = ({ children }) => {
 
   
   // to add the selected users to group chat 
-  console.log("selectedUsers: ", selectedUsers);
+  // console.log("selectedUsers: ", selectedUsers);
   const handleGroup = (userToAdd) => {
     if (selectedUsers.includes(userToAdd)) {
       toast({
@@ -63,8 +65,8 @@ const GroupChatModal = ({ children }) => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.get(`/api/user?search=${search}`, config);
-      console.log(data);
+      const { data } = await axios.get(`${ENDPOINT}/api/user?search=${search}`, config);
+      // console.log(data);
       setLoading(false);
       setSearchResult(data);
     } catch (error) {
@@ -104,7 +106,7 @@ const GroupChatModal = ({ children }) => {
         },
       };
       const { data } = await axios.post(
-        `/api/chat/group`,
+        `${ENDPOINT}/api/chat/group`,
         {
           name: groupChatName,
           users: JSON.stringify(selectedUsers.map((u) => u._id)),

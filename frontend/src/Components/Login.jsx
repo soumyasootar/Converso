@@ -12,6 +12,7 @@ import {
 import axios from "axios";
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+const ENDPOINT = "https://converso-vf08.onrender.com"; // "https://talk-a-tive.herokuapp.com"; -> After deployment
 
 const Login = () => {
   const [show, setshow] = useState(false);
@@ -28,7 +29,7 @@ const Login = () => {
       password: formData.get("password"),
     };
 
-    console.log("obj: ", obj);
+    // console.log("obj: ", obj);
 
     try {
       const config = {
@@ -37,7 +38,7 @@ const Login = () => {
         },
       };
 
-      const { data } = await axios.post("/api/user/login", obj, config);
+      const { data } = await axios.post(`${ENDPOINT}/api/user/login`, obj, config);
 
       toast({
         title: "Welcome Back",

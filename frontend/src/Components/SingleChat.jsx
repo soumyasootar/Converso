@@ -2,7 +2,7 @@ import { FormControl } from "@chakra-ui/form-control";
 import { Input } from "@chakra-ui/input";
 import { Box, Text } from "@chakra-ui/layout";
 import "./styles.css";
-import { Button, IconButton, Spinner, useToast } from "@chakra-ui/react";
+import { IconButton, Spinner, useToast } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { ArrowBackIcon } from "@chakra-ui/icons";
@@ -14,7 +14,8 @@ import ProfileModal from "./ProfileModal";
 import { getSender, getSenderFull } from "../configs/chatLogics";
 import UpdateGroupChatModal from "./UpdateGroupChatModal";
 import ScrollableChat from "./ScrollableChat";
-const ENDPOINT = "http://localhost:3000"; // "https://talk-a-tive.herokuapp.com"; -> After deployment
+// const ENDPOINT = "http://localhost:3000"; // "https://talk-a-tive.herokuapp.com"; -> After deployment
+const ENDPOINT = "https://converso-vf08.onrender.com"; // "https://talk-a-tive.herokuapp.com"; -> After deployment
 
 //selectedChatCompare is a copy of selectedChat to see if we want to send in message of in notification
 var socket, selectedChatCompare;
@@ -53,7 +54,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       setLoading(true);
 
       const { data } = await axios.get(
-        `/api/message/${selectedChat._id}`,
+        `${ENDPOINT}/api/message/${selectedChat._id}`,
         config
       );
       setMessages(data);
@@ -84,7 +85,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         };
         setNewMessage("");
         const { data } = await axios.post(
-          "/api/message",
+          `${ENDPOINT}/api/message`,
           {
             content: newMessage,
             chatId: selectedChat,
@@ -122,7 +123,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     // eslint-disable-next-line
   }, [selectedChat]);
 
-  console.log("notification: ", notification);
+  // console.log("notification: ", notification);
   useEffect(() => {
     socket.on("message recieved", (newMessageRecieved) => {
       if (
